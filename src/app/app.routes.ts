@@ -10,6 +10,7 @@ import { authGuard } from './guards/auth.guard';
 import { authchildGuard } from './guards/authchild.guard';
 import { authdeactivateGuard } from './guards/authdeactivate.guard';
 import { authmatchGuard } from './guards/authmatch.guard';
+import { RenderMode } from '@angular/ssr';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, title: "home" },
@@ -17,15 +18,7 @@ export const routes: Routes = [
         path: 'products', component: ProductComponent, title: "products",
         children: [
             {
-                path: 'details/:productId', component: ProductdetailComponent, data: {
-                    prerender: {
-                        getPrerenderParams: () => [
-                            { productId: '1' },
-                            { productId: '2' },
-                            { productId: '3' },
-                        ]
-                    }
-                }
+                path: 'details/:productId', component: ProductdetailComponent,data:{renderMode:'ssr'}
             },
             { path: 'add-product', component: AddproductComponent }
         ], canActivateChild: [authchildGuard]
