@@ -12,14 +12,26 @@ import { authdeactivateGuard } from './guards/authdeactivate.guard';
 import { authmatchGuard } from './guards/authmatch.guard';
 
 export const routes: Routes = [
-    {path:'',component:HomeComponent,title:"home"},
-    {path:'products',component:ProductComponent,title:"products",
-        children:[
-            {path:'details/:productId',component:ProductdetailComponent},
-            {path:'add-product',component:AddproductComponent}
-        ],canActivateChild:[authchildGuard]},
-    {path:'profile',component:ProfileComponent,title:"profile",canActivate:[authGuard],canDeactivate:[authdeactivateGuard]},
-    {path:'dashboard',loadComponent:()=>import('./dashboard/dashboard.component').then(c=>c.DashboardComponent),title:"dashboard"},
-    {path:'**',component:NotfoundComponent}
-    
+    { path: '', component: HomeComponent, title: "home" },
+    {
+        path: 'products', component: ProductComponent, title: "products",
+        children: [
+            {
+                path: 'details/:productId', component: ProductdetailComponent, data: {
+                    prerender: {
+                        getPrerenderParams: () => [
+                            { productId: '1' },
+                            { productId: '2' },
+                            { productId: '3' },
+                        ]
+                    }
+                }
+            },
+            { path: 'add-product', component: AddproductComponent }
+        ], canActivateChild: [authchildGuard]
+    },
+    { path: 'profile', component: ProfileComponent, title: "profile", canActivate: [authGuard], canDeactivate: [authdeactivateGuard] },
+    { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(c => c.DashboardComponent), title: "dashboard" },
+    { path: '**', component: NotfoundComponent }
+
 ];
