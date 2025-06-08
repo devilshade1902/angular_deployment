@@ -1,0 +1,7 @@
+<app-navbar></app-navbar>
+<div class="container border border-primary bg-warning m-3 p-3">
+  <router-outlet></router-outlet>
+</div>
+<hr>
+<h3>{{login()?"you are logged in":"you are logged out"}}</h3>
+<button class="btn btn-primary" (click)="toggleLogin()">{{login()?"logout":"login"}}</button>
